@@ -1,0 +1,19 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("@bazel_gazelle//:def.bzl", "gazelle")
+
+# gazelle:prefix github.com/bazelbuild/rules_go_cloud_logging
+gazelle(name = "gazelle")
+
+go_library(
+    name = "rules_go_cloud_logging_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/bazelbuild/rules_go_cloud_logging",
+    visibility = ["//visibility:private"],
+    deps = ["@com_google_cloud_go_logging//:go_default_library"],
+)
+
+go_binary(
+    name = "rules_go_cloud_logging",
+    embed = [":rules_go_cloud_logging_lib"],
+    visibility = ["//visibility:public"],
+)
